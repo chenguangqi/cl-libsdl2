@@ -12,5 +12,6 @@
   :components
   ((:file "package")
    (:file "library")
-   (:file "cl-libsdl2")))
+   (:file "sdl")
+   (:file "version")))
 
