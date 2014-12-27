@@ -19,9 +19,27 @@
 
 (defun render ()
   (sdl-render-clear *renderer*)
-  (print "display bmp")
-  (format t "return ~A" (sdl-render-copy *renderer* *texture* (cffi:null-pointer) (cffi:null-pointer)))
-  (sdl-render-present *renderer*))
+  (cffi:with-foreign-objects ((src '(:struct sdl-rect))
+			      (dst '(:struct sdl-rect)))
+    (sdl-query-texture 
+     *texture* 
+     (cffi:null-pointer) 
+     (cffi:null-pointer) 
+     (cffi:foreign-slot-pointer src '(:struct sdl-rect) 'w)
+     (cffi:foreign-slot-pointer src '(:struct sdl-rect) 'h))
+    
+    (with-foreign-slots ((x y w h) src (:struct sdl-rect))
+      (setf x 0)
+      (setf y 0)
+      (format t "w:~A h:~A" w h))
+    
+    (print "display bmp")
+    (format t "return ~A" (sdl-render-copy 
+			   *renderer* 
+			   *texture* 
+			   src 
+			   src))
+    (sdl-render-present *renderer*)))
 
 (defun update ()
   
@@ -31,7 +49,7 @@
   (cffi:with-foreign-object (event '(:union sdl-event))
     (when (sdl-poll-event event)
       (cffi:with-foreign-slots ((type) event (:union sdl-event))
-	(case (cffi:foreign-enum-keyword 'sdl-event-type type)
+	(case (cffi:foreign-enum-keyword 'sdl-event-type type :errorp nil)
 	  (:quit (setf *running* nil)))))))
 
 (defun clean ()
@@ -55,3 +73,4 @@
      (sdl-delay 100))
   (clean))
 
+(main)

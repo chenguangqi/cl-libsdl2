@@ -119,8 +119,3 @@ extern DECLSPEC void SDLCALL SDL_DestroyRenderer(SDL_Renderer * renderer);"
   (texture sdl-texture)
   (src (:pointer (:struct sdl-rect)))
   (dst (:pointer (:struct sdl-rect))))
-
-extern DECLSPEC int SDLCALL SDL_RenderCopy(SDL_Renderer * renderer,
-                                           SDL_Texture * texture,
-                                           const SDL_Rect * srcrect,
-                                           const SDL_Rect * dstrect);
