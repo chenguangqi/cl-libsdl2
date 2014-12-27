@@ -1,6 +1,6 @@
 (in-package #:cl-libsdl2)
 
-(defctype sdl-keycode :int32
+(cffi:defctype sdl-keycode :int32
   "The SDL virtual key representation.
 
 Values of this type are used to represent keyboard keys using the current

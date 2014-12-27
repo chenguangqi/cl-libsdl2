@@ -1,11 +1,11 @@
 (in-package #:cl-libsdl2)
 
-(defctype sdl-blit-map :pointer)
+(cffi:defctype sdl-blit-map :pointer)
 
-(defcstruct sdl-surface
+(cffi:defcstruct sdl-surface
   "A collection of pixels used in software blitting."
   (flags :uint32)
-  (format (:pointer (:struct sdl-pixel-format)))
+  (format :pointer)
   (w :int)
   (h :int)
   (pitch :int)
@@ -21,7 +21,7 @@
 
   (refcount :int))
 
-(defcfun ("SDL_LoadBMP_RW" sdl-load-bmp-rw) :pointer
+(cffi:defcfun ("SDL_LoadBMP_RW" sdl-load-bmp-rw) :pointer
   "Load a surface from a seekable SDL data stream (memory or file)."
   (src :pointer)
   (freesrc :int))
@@ -31,7 +31,7 @@
   (cffi:with-foreign-string (mode "rb")
     (sdl-load-bmp-rw (sdl-rw-from-file file mode) 1)))
 
-(defcfun ("SDL_FreeSurface" sdl-free-surface) :void
+(cffi:defcfun ("SDL_FreeSurface" sdl-free-surface) :void
   (surface :pointer))
 
 

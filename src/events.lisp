@@ -1,6 +1,6 @@
 (in-package #:cl-libsdl2)
 
-(defcenum sdl-event-type
+(cffi:defcenum sdl-event-type
   "The types of events that can be delivered."
   (:first-event #x0)
   (:quit #x100)
@@ -59,12 +59,12 @@
 
 
 
-(defcstruct sdl-common-event 
+(cffi:defcstruct sdl-common-event 
   "Fields shared by every event"
   (type :uint32)
   (timestamp :uint32))
 
-(defcstruct sdl-window-event
+(cffi:defcstruct sdl-window-event
   "Window state change event data (event.window.*)"
   (type :uint32)
   (timestamp :uint32)
@@ -73,7 +73,7 @@
   (data1 :int32 :offset 16)
   (data2 :int32))
 
-(defcstruct sdl-keyboard-event
+(cffi:defcstruct sdl-keyboard-event
   "Keyboard button event structure (event.key.*)"
   (type :uint32)
   (timestamp :uint32)
@@ -82,7 +82,7 @@
   (repeat :uint8)
   (keysym (:struct sdl-keysym) :offset 16))
 
-(defcstruct  sdl-mouse-motion-event
+(cffi:defcstruct  sdl-mouse-motion-event
 "Mouse motion event structure (event.motion.*)"
     (type :uint32)
     (timestamp :uint32)
@@ -94,7 +94,7 @@
     (xrel :int32)
     (yrel :int32))
 
-(defcstruct sdl-mouse-button-event
+(cffi:defcstruct sdl-mouse-button-event
   "Mouse button event structure (event.button.*)"
     (type :uint32)
     (timestamp :uint32)
@@ -106,7 +106,7 @@
     (x :int32 :offset 20)
     (y :int32))
 
-(defcstruct sdl-mouse-wheel-event 
+(cffi:defcstruct sdl-mouse-wheel-event 
   "Mouse wheel event structure (event.wheel.*)"
     (type :uint32)
     (timestamp :uint32)
@@ -115,7 +115,7 @@
     (x :int32)
     (y :int32))
 
-(defcstruct sdl-drop-event
+(cffi:defcstruct sdl-drop-event
   "An event used to request a file open by the system (event.drop.*)
 This event is disabled by default, you can enable it with SDL_EventState()
 If you enable this event, you must free the filename in the event."
@@ -123,12 +123,12 @@ If you enable this event, you must free the filename in the event."
   (timestamp :uint32)
   (file :string));         /**< The file name, which should be freed with SDL_free() */
 
-(defcstruct sdl-quit-event
+(cffi:defcstruct sdl-quit-event
   "The \"quit requested\" event"
   (type :uint32)
   (timestamp :uint32))
 
-(defcstruct sdl-user-event
+(cffi:defcstruct sdl-user-event
   "A user-defined event type (event.user.*)"
     (type :uint32)
     (timestamp :uint32)
@@ -137,9 +137,9 @@ If you enable this event, you must free the filename in the event."
     (data1 :pointer)
     (data2 :pointer))
 
-(defctype sdl-sys-wm-msg :pointer)
+(cffi:defctype sdl-sys-wm-msg :pointer)
 
-(defcstruct sdl-sys-wm-event
+(cffi:defcstruct sdl-sys-wm-event
   "A video driver dependent system event (event.syswm.*)
 This event is disabled by default, you can enable it with SDL_EventState()
 
@@ -149,7 +149,7 @@ If you want to use this event, you should include SDL_syswm.h."
     (msg sdl-sys-wm-msg))
 
 
-(defcunion (sdl-event :size 56)
+(cffi:defcunion (sdl-event :size 56)
   "General event structure"
   (type :uint32)
   (common (:struct sdl-common-event))
@@ -177,7 +177,7 @@ If you want to use this event, you should include SDL_syswm.h."
   (drop (:struct sdl-drop-event)))
 
 
-(defcfun ("SDL_PollEvent" sdl-poll-event) :int
+(cffi:defcfun ("SDL_PollEvent" sdl-poll-event) :int
   "Polls for currently pending events.
 extern DECLSPEC int SDLCALL SDL_PollEvent(SDL_Event * event);"
-  (event (:pointer (:union sdl-event))))
+  (event :pointer))

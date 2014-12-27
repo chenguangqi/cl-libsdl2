@@ -1,5 +1,5 @@
 (in-package #:cl-libsdl2)
 
-(defcfun ("SDL_RWFromFile" sdl-rw-from-file) :pointer
-  (file :string)
-  (mode (:pointer :char)))
+(cffi:defcfun ("SDL_RWFromFile" sdl-rw-from-file) :pointer
+  (file :pointer)
+  (mode :pointer))

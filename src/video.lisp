@@ -1,9 +1,9 @@
 (in-package #:cl-libsdl2)
 
-(defctype sdl-window :pointer
+(cffi:defctype sdl-window :pointer
   "The type used to identify a window")
 
-(defbitfield (sdl-window-flag :uint32)
+(cffi:defbitfield (sdl-window-flag :uint32)
   (:fullscreen         #x00000001)
   (:opengl             #x00000002)    
   (:shown              #x00000004)
@@ -20,7 +20,7 @@
   (:allow-highdpi      #x00002000))
 
 
-(defcfun ("SDL_CreateWindow" sdl-create-window) sdl-window
+(cffi:defcfun ("SDL_CreateWindow" sdl-create-window) :pointer
   "Create a window with the specified position, dimensions, and flags.
  *               ::SDL_WINDOW_FULLSCREEN,    ::SDL_WINDOW_OPENGL,
  *               ::SDL_WINDOW_HIDDEN,        ::SDL_WINDOW_BORDERLESS,
@@ -32,13 +32,13 @@
 extern DECLSPEC SDL_Window * SDLCALL SDL_CreateWindow(const char *title,
                                                       int x, int y, int w,
                                                       int h, Uint32 flags);"
-  (title :string)
+  (title :pointer)
   (x     :int)
   (y     :int)
   (w     :int)
   (h     :int)
-  (flags sdl-window-flag))
+  (flags :uint32))
 
-(defcfun ("SDL_DestroyWindow" sdl-destroy-window) :void
+(cffi:defcfun ("SDL_DestroyWindow" sdl-destroy-window) :void
   "Destroy a window."
-  (window sdl-window))
+  (window :pointer))

@@ -1,6 +1,6 @@
 (in-package #:cl-libsdl2)
 
-(defbitfield (sdl-init-flag :uint32)
+(cffi:defbitfield (sdl-init-flag :uint32)
   (:timer          #x00000001)
   (:audio          #x00000010)
   (:video          #x00000020)
@@ -12,17 +12,17 @@
   (:everything     #x00007231))
 
 
-(defcfun ("SDL_Init" sdl-init) :int
-  (flags sdl-init-flag))
+(cffi:defcfun ("SDL_Init" sdl-init) :int
+  (flags :uint32))
 
-(defcfun ("SDL_InitSubSystem" sdl-init-subsystem) :int
-  (flags sdl-init-flag))
+(cffi:defcfun ("SDL_InitSubSystem" sdl-init-subsystem) :int
+  (flags :uint32))
 
-(defcfun ("SDL_QuitSubSystem" sdl-quit-subsystem) :void
-  (flags sdl-init-flag))
+(cffi:defcfun ("SDL_QuitSubSystem" sdl-quit-subsystem) :void
+  (flags :uint32))
 
-(defcfun ("SDL_WasInit" sdl-was-init) sdl-init-flag
-  (flags sdl-init-flag))
+(cffi:defcfun ("SDL_WasInit" sdl-was-init) :uint32
+  (flags :uint32))
 
 (defcfun ("SDL_Quit" sdl-quit) :void
   "quit sdl system.")

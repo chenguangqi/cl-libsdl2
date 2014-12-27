@@ -1,18 +1,19 @@
 (in-package #:cl-libsdl2)
 
 
-(defbitfield (sdl-renderer-flag :uint32)
+(cffi:defbitfield (sdl-renderer-flag :uint32)
   (:software      #x00000001)
   (:accelerated   #x00000002)
   (:presentvsync  #x00000004)
   (:targettexture #x00000008))
 
-(defctype sdl-renderer :pointer
+(cffi:defctype sdl-renderer :pointer
   "A structure representing rendering state")
-(defctype sdl-texture :pointer
+
+(cffi:defctype sdl-texture :pointer
   "An efficient driver-specific representation of pixel data")
 
-(defcfun ("SDL_CreateRenderer" sdl-create-renderer) sdl-renderer
+(cffi:defcfun ("SDL_CreateRenderer" sdl-create-renderer) :pointer
     "/**
  *  \brief Create a 2D rendering context for a window.
  *
@@ -29,12 +30,12 @@
  */
 extern DECLSPEC SDL_Renderer * SDLCALL SDL_CreateRenderer(SDL_Window * window,
                                                int index, Uint32 flags);"
-  (window sdl-window)
+  (window :pointer)
   (index :int)
-  (flags sdl-renderer-flag))
+  (flags :uint32))
 
 
-(defcfun ("SDL_SetRenderDrawColor" sdl-set-render-draw-color) :int
+(cffi:defcfun ("SDL_SetRenderDrawColor" sdl-set-render-draw-color) :int
   "/**
  *  \brief Set the color used for drawing operations (Rect, Line and Clear).
  *
@@ -50,14 +51,14 @@ extern DECLSPEC SDL_Renderer * SDLCALL SDL_CreateRenderer(SDL_Window * window,
 extern DECLSPEC int SDLCALL SDL_SetRenderDrawColor(SDL_Renderer * renderer,
                                            Uint8 r, Uint8 g, Uint8 b,
                                            Uint8 a);"
-  (renderer sdl-renderer)
+  (renderer :pointer)
   (r :uint8)
   (g :uint8)
   (b :uint8)
   (a :uint8))
 
 
-(defcfun ("SDL_RenderClear" sdl-render-Clear) :int
+(cffi:defcfun ("SDL_RenderClear" sdl-render-Clear) :int
   "/**
  *  \brief Clear the current rendering target with the drawing color
  *
@@ -66,19 +67,19 @@ extern DECLSPEC int SDLCALL SDL_SetRenderDrawColor(SDL_Renderer * renderer,
  *  \return 0 on success, or -1 on error
  */
 extern DECLSPEC int SDLCALL SDL_RenderClear(SDL_Renderer * renderer);"
-  (renderer sdl-renderer))
+  (renderer :pointer))
 
 
-(defcfun ("SDL_RenderPresent" sdl-render-present) :void
+(cffi:defcfun ("SDL_RenderPresent" sdl-render-present) :void
   "/**
  *  \brief Update the screen with rendering performed.
  */
 extern DECLSPEC void SDLCALL SDL_RenderPresent(SDL_Renderer * renderer);"
-  (renderer sdl-renderer))
+  (renderer :pointer))
 
 
 
-(defcfun ("SDL_DestroyTexture" sdl-destroy-texture) :void
+(cffi:defcfun ("SDL_DestroyTexture" sdl-destroy-texture) :void
   "/**
  *  \brief Destroy the specified texture.
  *
@@ -86,9 +87,9 @@ extern DECLSPEC void SDLCALL SDL_RenderPresent(SDL_Renderer * renderer);"
  *  \sa SDL_CreateTextureFromSurface()
  */
 extern DECLSPEC void SDLCALL SDL_DestroyTexture(SDL_Texture * texture);"
-  (texture sdl-texture))
+  (texture :pointer))
 
-(defcfun ("SDL_DestroyRenderer" sdl-destroy-renderer) :void
+(cffi:defcfun ("SDL_DestroyRenderer" sdl-destroy-renderer) :void
   "/**
  *  \brief Destroy the rendering context for a window and free associated
  *         textures.
@@ -96,26 +97,26 @@ extern DECLSPEC void SDLCALL SDL_DestroyTexture(SDL_Texture * texture);"
  *  \sa SDL_CreateRenderer()
  */
 extern DECLSPEC void SDLCALL SDL_DestroyRenderer(SDL_Renderer * renderer);"
-  (renderer sdl-renderer))
+  (renderer :pointer))
 
 
-(defcfun ("SDL_QueryTexture" sdl-query-texture) :int
+(cffi:defcfun ("SDL_QueryTexture" sdl-query-texture) :int
   "Query the attributes of a texture"
-  (texture sdl-texture)
-  (format (:pointer :uint32))
-  (access (:pointer :uint32))
-  (w (:pointer :int32))
-  (h (:pointer :int32)))
+  (texture :pointer)
+  (format :pointer)
+  (access :pointer)
+  (w :pointer)
+  (h :pointer))
 
 
-(defcfun ("SDL_CreateTextureFromSurface" sdl-create-texture-from-surface) :pointer
+(cffi:defcfun ("SDL_CreateTextureFromSurface" sdl-create-texture-from-surface) :pointer
   "Create a texture from an existing surface."
   (renderer :pointer)
   (surface :pointer))
 
-(defcfun ("SDL_RenderCopy" sdl-render-copy) :int
+(cffi:defcfun ("SDL_RenderCopy" sdl-render-copy) :int
   "Copy a portion of the texture to the current rendering target."
-  (renderer sdl-renderer)
-  (texture sdl-texture)
-  (src (:pointer (:struct sdl-rect)))
-  (dst (:pointer (:struct sdl-rect))))
+  (renderer :pointer)
+  (texture :pointer)
+  (src :pointer)
+  (dst :pointer))

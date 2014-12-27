@@ -1,6 +1,6 @@
 (in-package #:cl-libsdl2)
 
-(defcenum sdl-scancode
+(cffi:defcenum sdl-scancode
   "The SDL keyboard scancode representation.
 
 Values of this type are used to represent keyboard keys, among other places
