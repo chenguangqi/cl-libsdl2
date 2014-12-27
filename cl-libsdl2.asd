@@ -1,5 +1,4 @@
 ;;;; cl-libsdl2.asd
-
 (asdf:defsystem #:cl-libsdl2
   :description "Describe cl-libsdl2 here"
   :author "Your Name <your.name@example.com>"
@@ -13,5 +12,14 @@
   ((:file "package")
    (:file "library")
    (:file "sdl")
-   (:file "version")))
-
+   (:file "version")
+   (:file "video")
+   (:file "render")
+   (:file "timer")
+   (:file "keycode")
+   (:file "scancode")
+   (:file "keyboard")
+   (:file "events")
+   (:file "rect")
+   (:file "surface")
+   (:file "rwops")))
