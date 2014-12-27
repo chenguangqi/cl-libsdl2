@@ -32,7 +32,7 @@ extern DECLSPEC SDL_Renderer * SDLCALL SDL_CreateRenderer(SDL_Window * window,
                                                int index, Uint32 flags);"
   (window :pointer)
   (index :int)
-  (flags :uint32))
+  (flags sdl-renderer-flag))
 
 
 (cffi:defcfun ("SDL_SetRenderDrawColor" sdl-set-render-draw-color) :int

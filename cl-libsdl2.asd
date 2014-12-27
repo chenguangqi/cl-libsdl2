@@ -23,4 +23,5 @@
    (:file "events")
    (:file "pixel")
    (:file "surface")
-   (:file "rwops")))
+   (:file "rwops")
+   (:file "error")))

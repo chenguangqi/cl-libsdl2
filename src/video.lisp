@@ -21,23 +21,12 @@
 
 
 (cffi:defcfun ("SDL_CreateWindow" sdl-create-window) :pointer
-  "Create a window with the specified position, dimensions, and flags.
- *               ::SDL_WINDOW_FULLSCREEN,    ::SDL_WINDOW_OPENGL,
- *               ::SDL_WINDOW_HIDDEN,        ::SDL_WINDOW_BORDERLESS,
- *               ::SDL_WINDOW_RESIZABLE,     ::SDL_WINDOW_MAXIMIZED,
- *               ::SDL_WINDOW_MINIMIZED,     ::SDL_WINDOW_INPUT_GRABBED,
- *               ::SDL_WINDOW_ALLOW_HIGHDPI.
- *
-
-extern DECLSPEC SDL_Window * SDLCALL SDL_CreateWindow(const char *title,
-                                                      int x, int y, int w,
-                                                      int h, Uint32 flags);"
-  (title :pointer)
+  (title :string)
   (x     :int)
   (y     :int)
   (w     :int)
   (h     :int)
-  (flags :uint32))
+  (flags sdl-window-flag))
 
 (cffi:defcfun ("SDL_DestroyWindow" sdl-destroy-window) :void
   "Destroy a window."

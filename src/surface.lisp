@@ -28,8 +28,7 @@
 
 (defun sdl-load-bmp (file)
   "Load a surface from a file."
-  (cffi:with-foreign-string (mode "rb")
-    (sdl-load-bmp-rw (sdl-rw-from-file file mode) 1)))
+  (sdl-load-bmp-rw (sdl-rw-from-file file "rb") 1))
 
 (cffi:defcfun ("SDL_FreeSurface" sdl-free-surface) :void
   (surface :pointer))
