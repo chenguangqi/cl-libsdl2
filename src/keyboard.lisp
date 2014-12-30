@@ -8,3 +8,11 @@ If you are looking for translated character input, see the ::SDL_TEXTINPUT event
   (sym sdl-keycode)
   (mod :uint16)
   (unused :uint32))
+
+
+(cffi:defcfun ("SDL_GetKeyboardFocus" sdl-get-keyboard-focus) :pointer
+  "Get the window which currently has keyboard focus.")
+
+(cffi:defcfun ("SDL_GetKeyboardState" sdl-get-keyboard-state) :pointer
+    "Get a snapshot of the current state of the keyboard."
+    (numkeys :int))

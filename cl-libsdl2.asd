@@ -13,6 +13,7 @@
    (:file "library")
    (:file "sdl")
    (:file "version")
+   (:file "stdinc")
    (:file "video")
    (:file "rect")
    (:file "render")
