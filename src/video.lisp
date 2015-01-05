@@ -31,3 +31,12 @@
 (cffi:defcfun ("SDL_DestroyWindow" sdl-destroy-window) :void
   "Destroy a window."
   (window :pointer))
+
+
+(cffi:defcfun ("SDL_GetWindowSurface" sdl-get-window-surface ) :pointer 
+  "Get the SDL surface associated with the window."
+  (window :pointer))
+
+(cffi:defcfun ("SDL_UpdateWindowSurface" sdl-update-window-surface) :int
+  "Copy the window surface to the screen."
+  (window :pointer))

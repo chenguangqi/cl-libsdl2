@@ -33,4 +33,13 @@
 (cffi:defcfun ("SDL_FreeSurface" sdl-free-surface) :void
   (surface :pointer))
 
+(cffi:defcfun ("SDL_UpperBlit" sdl-upper-blit) :int
+  "This is the public blit function, SDL_BlitSurface(), and it performs rectangle validation and clipping before passing it to SDL_LowerBlit()"
+  (src :pointer)
+  (srcrect :pointer)
+  (dst :pointer)
+  (dstrect :pointer))
 
+
+(defun sdl-blit-surface (src srcrect dst dstrect)
+  (sdl-upper-blit src srcrect dst dstrect))
