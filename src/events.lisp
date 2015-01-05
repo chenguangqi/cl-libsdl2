@@ -176,8 +176,83 @@ If you want to use this event, you should include SDL_syswm.h."
   ;(dgesture dollar-gesture-event)
   (drop (:struct sdl-drop-event)))
 
+(cffi:defcenum sdl-event-action
+  :add-event
+  :peek-event
+  :get-event)
+
+(cffi:defcfun ("SDL_PeepEvents" sdl-peep-events) :int
+  "Checks the event queue for messages and optionally returns them."
+  (events :pointer)
+  (numevents :int)
+  (action sdl-event-action)
+  (min-type :uint32)
+  (max-type :uint32))
+
+(cffi:defcfun ("SDL_HasEvent" sdl-has-event) sdl-bool
+  "Checks to see if certain event types are in the event queue."
+  (type :uint32))
+
+(cffi:defcfun ("SDL_HasEvents" sdl-has-events) sdl-bool
+  "Checks to see if certain event types are in the event queue."
+  (min-type :uint32)
+  (max-type :uint32))
+
+(cffi:defcfun ("SDL_FlushEvent" sdl-flush-event) :void
+  "This function clears events from the event queue"
+  (type :uint32))
+
+(cffi:defcfun ("SDL_FlushEvents" sdl-flush-events) :void
+  "This function clears events from the event queue"
+  (min-type :uint32)
+  (max-type :uint32))
 
 (cffi:defcfun ("SDL_PollEvent" sdl-poll-event) :int
-  "Polls for currently pending events.
-extern DECLSPEC int SDLCALL SDL_PollEvent(SDL_Event * event);"
+  "Polls for currently pending events."
   (event :pointer))
+
+(cffi:defcfun ("SDL_WaitEvent" sdl-wait-event) :int
+  "Waits indefinitely for the next available event."
+  (event :pointer))
+
+(cffi:defcfun ("SDL_WaitEventTimeout" sdl-wait-event-timeout) :int
+  "Waits until the specified timeout (in milliseconds) for the next
+ available event."
+  (event :pointer)
+  (timeout :int))
+
+(cffi:defcfun ("SDL_PushEvent" sdl-push-event) :int
+  "Add an event to the event queue."
+  (event :pointer))
+
+(cffi:defcfun ("SDL_SetEventFilter" sdl-set-event-filter) :void
+  "Sets up a filter to process all events before they change internal state and
+ are posted to the internal event queue."
+  (filter :pointer)
+  (user-data :pointer))
+
+(cffi:defcfun ("SDL_GetEventFilter" sdl-get-event-filter) sdl-bool
+  "Return the current event filter - can be used to \"chain\" filters."
+  (filter :pointer)
+  (user-data :pointer))
+
+(cffi:defcfun ("SDL_AddEventWatch" sdl-add-event-watch) :void
+  "Add a function which is called when an event is added to the queue."
+  (filter :pointer)
+  (userdata :pointer))
+
+(cffi:defcfun ("SDL_DelEventWatch" sdl-del-event-watch) :void
+  "Remove an event watch function added with SDL_AddEventWatch()"
+  (filter :pointer)
+  (userdata :pointer))
+
+(cffi:defcfun ("SDL_FilterEvents" sdl-filter-events) :void
+  "Run the filter function on the current event queue, removing any
+ events for which the filter returns 0."
+  (filter :pointer)
+  (user-data :pointer))
+
+(cffi:defcfun ("SDL_EventState" sdl-event-state) :uint8
+  "This function allows you to set the state of processing certain events."
+  (type :uint32)
+  (state :int))
